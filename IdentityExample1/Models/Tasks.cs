@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IdentityExample1.Models
 {
-    public class Task
+    public class Tasks
     {
         private int id;
         private int userId;

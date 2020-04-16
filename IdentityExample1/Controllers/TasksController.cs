@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace IdentityExample1.Controllers
 {
-    public class TaskController : Controller
+    public class TasksController : Controller
     {
         private DAL dal;
 
@@ -19,11 +19,11 @@ namespace IdentityExample1.Controllers
         private readonly SignInManager<DapperIdentityUser> _signInManager;
         private readonly ILogger _logger;
 
-        public TaskController(IConfiguration config, UserManager<DapperIdentityUser> userManager,
+        public TasksController(IConfiguration config, UserManager<DapperIdentityUser> userManager,
             SignInManager<DapperIdentityUser> signInManager,
             ILoggerFactory loggerFactory)
         {
-            dal = new DAL(config.GetConnectionString("default"));
+            dal = new DAL(config.GetConnectionString("DefaultConnection"));
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
@@ -31,10 +31,22 @@ namespace IdentityExample1.Controllers
 
         public IActionResult Index()
         {
-            //string userId = _userManager.GetUserId(User);
             ViewData["UID"] = _userManager.GetUserId(User);
-            //ViewData["Tasks"] = dal.GetTasksByMostRecent(userId);
+
+            int id = int.Parse(_userManager.GetUserId(User));
+
+            var results = dal.GetTasksByMostRecent(id);
+
+            ViewData["nameof(Tasks)"] = results;
+
             return View();
+        }
+
+        public IActionResult ChangeStatus(Tasks t)
+        {
+            int result = dal.FlipStatus(t);
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult AddTask()

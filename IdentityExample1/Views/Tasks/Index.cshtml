@@ -1,0 +1,52 @@
+﻿@model Tasks
+
+@{
+    ViewData["Title"] = "Index";
+    List<Tasks> tasks = (List<Tasks>)ViewData["nameof(Tasks)"];
+}
+
+<h1>Index</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Task</th>
+        <th>Due Date</th>
+        <th>Completed</th>
+    </tr>
+    @foreach (Tasks t in tasks)
+    {
+        <tr>
+            <td>@t.Id</td>
+            <td>@t.TaskDescription</td>
+            <td>@t.DueDate</td>
+            @*<td>@Html.CheckBoxFor(c => c.Completed)</td>*@
+
+            @if (t.Completed == 1)
+            {
+                <td>Completed</td>
+                <td>
+                    <form asp-controller="Tasks" asp-action="ChangeStatus" method="post">
+                        <input type="hidden" id="@t.Completed" />
+                        <input type="submit" value="Mark as In Progress" />
+                    </form>
+                </td>
+            }
+            else
+            {
+                <td>In Progress</td>
+                <td>
+                    @*<button asp-controller="Tasks" asp-action="ChangeStatus" id="Completed" formmethod="post">Mark as Complete</button>*@
+                    @*<form asp-controller="Tasks" asp-action="ChangeStatus" method="post">
+                            <input type="submit" value="Mark as Complete" />
+                        </form>*@
+                    <form asp-controller="Tasks" asp-action="ChangeStatus" method="post">
+                        @*<input type="hidden" id="Completed" value="Completed" />*@
+                        <input type="submit" value="Mark as In Progress" />
+                    </form>
+                </td>
+            }
+        </tr>
+    }
+
+</table>
