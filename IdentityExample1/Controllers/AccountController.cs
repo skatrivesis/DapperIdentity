@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using Identity.Dapper.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace IdentityExample1.Controllers
 {
@@ -40,6 +41,9 @@ namespace IdentityExample1.Controllers
         public IActionResult Login(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
+            //HttpContext.Session.SetString("UserId",  id);
+
             return View();
         }
 

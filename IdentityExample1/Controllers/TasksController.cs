@@ -42,8 +42,11 @@ namespace IdentityExample1.Controllers
             return View();
         }
 
-        public IActionResult ChangeStatus(Tasks t)
+        [HttpGet]
+        public IActionResult ChangeStatus(int id)
         {
+            Tasks t = dal.GetTasksById(id);
+
             int result = dal.FlipStatus(t);
 
             return RedirectToAction("Index");
@@ -51,8 +54,7 @@ namespace IdentityExample1.Controllers
 
         public IActionResult AddTask()
         {
-
-            return View();
+            return View(new Tasks());
         }
     }
 }

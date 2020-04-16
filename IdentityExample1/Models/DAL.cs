@@ -24,17 +24,27 @@ namespace IdentityExample1.Models
             return conn.Query<Tasks>(queryString, new { id = id });
         }
 
-        [HttpPost]
+        public Tasks GetTasksById(int id)
+        {
+            var queryString = "SELECT * FROM Tasks WHERE Id = @id";
+            return conn.QueryFirstOrDefault<Tasks>(queryString, new { id = id });
+        }
+
         public int FlipStatus(Tasks t)
         {
             if (t.Completed == 1)
             {
                 t.Completed = 0;
             }
-            else
+            else if (t.Completed == 0)
             {
                 t.Completed = 1;
             }
+            else
+            {
+                t.Completed = 0;
+            }
+
             var flipQuery = "UPDATE Tasks SET Completed = @Completed WHERE Id = @id";
 
             return conn.Execute(flipQuery, t);
