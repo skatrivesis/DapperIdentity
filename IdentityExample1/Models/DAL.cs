@@ -49,5 +49,21 @@ namespace IdentityExample1.Models
 
             return conn.Execute(flipQuery, t);
         }
+
+        public int DeleteTaskById(int id)
+        {
+            string deleteQuery = "DELETE FROM Tasks WHERE Id = @id";
+
+            return conn.Execute(deleteQuery, new { id = id });
+        }
+
+        public int CreateTask(Tasks t)
+        {
+            t.Completed = 0;
+
+            string addQuery = "INSERT INTO Tasks (UserId, TaskDescription, DueDate, Completed)";
+            addQuery += "VALUES (@UserId, @TaskDescription, @DueDate, @Completed)";
+            return conn.Execute(addQuery, t);
+        }
     }
 }

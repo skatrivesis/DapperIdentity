@@ -52,9 +52,27 @@ namespace IdentityExample1.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult AddTask()
+        [HttpGet]
+        public IActionResult AddTaskForm()
         {
+            ViewData["UID"] = _userManager.GetUserId(User);
             return View(new Tasks());
+        }
+
+        [HttpPost]
+        public IActionResult AddTaskDB(Tasks t)
+        {
+            t.UserId = int.Parse(_userManager.GetUserId(User));
+            int result = dal.CreateTask(t);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteTask(int id)
+        {
+            int result = dal.DeleteTaskById(id);
+
+            return RedirectToAction("Index");
         }
     }
 }

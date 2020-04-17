@@ -2,16 +2,16 @@
 @using Microsoft.AspNetCore.Http
 
 @{
-    ViewData["Title"] = "AddTask";
+    ViewData["Title"] = "AddTaskForm";
 }
 
-<h1>AddTask</h1>
+<h1>AddTaskForm</h1>
 
-<form asp-controller="Tasks" asp-action="AddTask" method="post">
+<form asp-controller="Tasks" asp-action="AddTaskDB" method="post">
     <table>
         <tr>
             <td>@Html.LabelFor(t => t.UserId)</td>
-            <td>@Context.Session.GetString("UserId")</td>
+            <td>@ViewData["UID"]</td>
         </tr>
         <tr>
             <td>@Html.LabelFor(t => t.TaskDescription)</td>
@@ -20,6 +20,9 @@
         <tr>
             <td>@Html.LabelFor(t => t.DueDate) (Format ex.): 2020.10.10</td>
             <td>@Html.EditorFor(t => t.DueDate)</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit" /></td>
         </tr>
     </table>
 </form>
