@@ -7,6 +7,7 @@
 <h1>EditTaskForm</h1>
 
 <form asp-controller="Tasks" asp-action="EditTaskDB" method="post">
+    <input type="hidden" id="Id" name="Id" value="@Model.Id" /> @*Pass ID based on Model in a hidden field.*@ 
     <table>
         <tr>
             <td>@Html.LabelFor(t => t.UserId)</td>
@@ -16,10 +17,10 @@
             <td>@Html.LabelFor(t => t.TaskDescription)</td>
             <td>@Html.EditorFor(t => t.TaskDescription)</td>
         </tr>
-        @*<tr>
+        <tr>
             <td>@Html.LabelFor(t => t.DueDate)</td>
             <td>@Html.EditorFor(t => t.DueDate)</td>
-        </tr>*@
+        </tr>
         <tr>
             <td><input type="submit" value="Edit" /></td>
         </tr>
