@@ -1,17 +1,17 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "SortByStatusASC";
     List<Tasks> tasks = (List<Tasks>)ViewData["nameof(Tasks)"];
 }
 
-<h1>Tasks!</h1>
+
+<h1>Sort Ascending</h1>
 
 <table>
     <tr>
         <th>ID</th>
         <th>Task</th>
         <th>Due Date</th>
-        <th><a href="Tasks/SortByStatusASC">Completed</a></th>
+        <th><a href="SortByStatusDESC">Completed</a></th>
     </tr>
     @foreach (Tasks t in tasks)
     {

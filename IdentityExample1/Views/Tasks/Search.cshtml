@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Search";
+    List<Tasks> tasks = (List<Tasks>)ViewData["Search Results"];
+}
+
+<h1>Search</h1>
+
+<h2>Search Criteria: @ViewData["Search"]</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Task</th>
+        <th>Due Date</th>
+        <th>Completed</th>
+    </tr>
+    @if (tasks.Count == 0)
+    {
+        <tr><td>No search results found</td></tr>
+    }
+    else
+    {
+        @foreach (Tasks t in tasks)
+        {
+            <tr>
+                <td>@t.Id</td>
+                <td>@t.TaskDescription</td>
+                <td>@t.DueDate</td>
+
+                @if (t.Completed == 1)
+                {
+                    <td> Completed </td>
+                    <td><a href="/Tasks/ChangeStatus/@t.Id">Mark as In Progress</a></td>
+                }
+                else
+                {
+                    <td> In Progress </td>
+                    <td><a href="/Tasks/ChangeStatus/@t.Id">Mark as Completed</a></td>
+                }
+                <td><a href="/Tasks/EdittaskForm/@t.Id">Edit</a></td>
+                <td><a href="/Tasks/DeleteTask/@t.Id">Delete</a></td>
+            </tr>
+        }
+    }
+
+    <tr><td><a href="Tasks/AddTaskForm">Add Task</a></td></tr>
+
+</table>

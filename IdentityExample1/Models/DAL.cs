@@ -24,6 +24,19 @@ namespace IdentityExample1.Models
             return conn.Query<Tasks>(queryString, new { id = id });
         }
 
+        public IEnumerable<Tasks> GetTasksBySortASC(int id)
+        {
+            var queryString = "SELECT * FROM Tasks WHERE Userid = @id ORDER BY Completed ASC";
+
+            return conn.Query<Tasks>(queryString, new { id = id });
+        }
+        public IEnumerable<Tasks> GetTasksBySortDESC(int id)
+        {
+            var queryString = "SELECT * FROM Tasks WHERE Userid = @id ORDER BY Completed DESC";
+
+            return conn.Query<Tasks>(queryString, new { id = id });
+        }
+
         public Tasks GetTasksById(int id)
         {
             var queryString = "SELECT * FROM Tasks WHERE Id = @id";
@@ -52,7 +65,7 @@ namespace IdentityExample1.Models
 
         public int DeleteTaskById(int id)
         {
-            string deleteQuery = "DELETE FROM Tasks WHERE Id = @id";
+            var deleteQuery = "DELETE FROM Tasks WHERE Id = @id";
 
             return conn.Execute(deleteQuery, new { id = id });
         }
@@ -61,9 +74,25 @@ namespace IdentityExample1.Models
         {
             t.Completed = 0;
 
-            string addQuery = "INSERT INTO Tasks (UserId, TaskDescription, DueDate, Completed)";
+            var addQuery = "INSERT INTO Tasks (UserId, TaskDescription, DueDate, Completed)";
             addQuery += "VALUES (@UserId, @TaskDescription, @DueDate, @Completed)";
             return conn.Execute(addQuery, t);
+        }
+
+        public int EditTask(Tasks t)
+        {
+            var editString = "UPDATE Tasks SET TaskDescription = @TaskDescription WHERE Id = @Id";
+
+            return conn.Execute(editString, t);
+        }
+
+        public IEnumerable<Tasks> Search(string search)
+        {
+            search = '%' + search.ToLower() + '%';
+
+            var searchString = "SELECT * FROM Tasks WHERE TaskDescription LIKE @search";
+
+            return conn.Query<Tasks>(searchString, new { search = search });
         }
     }
 }

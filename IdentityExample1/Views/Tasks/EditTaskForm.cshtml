@@ -1,0 +1,27 @@
+﻿@model Tasks
+
+@{
+    ViewData["Title"] = "EditTaskForm";
+}
+
+<h1>EditTaskForm</h1>
+
+<form asp-controller="Tasks" asp-action="EditTaskDB" method="post">
+    <table>
+        <tr>
+            <td>@Html.LabelFor(t => t.UserId)</td>
+            <td>@Model.UserId</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(t => t.TaskDescription)</td>
+            <td>@Html.EditorFor(t => t.TaskDescription)</td>
+        </tr>
+        @*<tr>
+            <td>@Html.LabelFor(t => t.DueDate)</td>
+            <td>@Html.EditorFor(t => t.DueDate)</td>
+        </tr>*@
+        <tr>
+            <td><input type="submit" value="Edit" /></td>
+        </tr>
+    </table>
+</form>
